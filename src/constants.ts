@@ -4,9 +4,9 @@
  */
 export const CURRENCY_RATE_PER_USD: {[currency: string]: number} = {
   USD: 1,
-  EUR: 1.06,
-  SGD: 0.74,
-  BTC: 23241.1,
+  EUR: 0.94,
+  SGD: 1.35,
+  BTC: 0.000043,
 };
 
 export const COIN_COLOR_HASH: {[symbol: string]: string} = {
