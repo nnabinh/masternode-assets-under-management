@@ -1,6 +1,6 @@
 # Masternode assets under management
 
-https://user-images.githubusercontent.com/10094591/221433407-8fb37daf-0b59-45bf-9163-ace01e51c861.mov
+https://user-images.githubusercontent.com/10094591/221491809-e99dd983-8bb4-438e-8f09-dd9ecc2f2643.mov
 
 # Features included:
 

@@ -2,8 +2,9 @@ import React, {useCallback, useMemo, useState} from 'react';
 import {FlatList, StyleSheet} from 'react-native';
 import Container from '../../../components/Container';
 import Loading from '../../../components/Loading';
-import {COIN_COLOR_HASH} from '../../../constants';
-import {roundNumber} from '../../../utils/formatNumber';
+import {COIN_COLOR_HASH, HOLDING_CAP_PER_NODE} from '../../../constants';
+import {roundNumber} from '../../../utils/formatter';
+// import {roundNumber} from '../../../utils/formatter';
 import useCMCLatestData from '../../cmc/hooks/useCMCLatestData';
 import useMasternodesData from '../hooks/useMasternodesData';
 import Card from './Card';
@@ -30,7 +31,11 @@ export default function MasternodesScreen() {
         coinSymbol={cmcLatestData[item.coin].symbol}
         currencyValue={item.amount * cmcLatestData[item.coin].price}
         currency={currency}
-        totalAUM={item.amount}
+        totalAUM={
+          item.numberOfMasternodes *
+          HOLDING_CAP_PER_NODE[item.coin] *
+          cmcLatestData[item.coin].price
+        }
       />
     ),
     [currency, cmcLatestData],
@@ -40,16 +45,25 @@ export default function MasternodesScreen() {
     return (
       <>
         <SelectCurrency onChange={_currency => setCurrency(_currency)} />
-        <PieChart
-          data={masternodesData.map(data => ({
-            name: data.coin,
-            amount: roundNumber(data.amount),
-            color: COIN_COLOR_HASH[data.coin],
-          }))}
-        />
+        {masternodesData?.length && cmcLatestData && (
+          <PieChart
+            currency={currency}
+            data={masternodesData
+              .filter(data => cmcLatestData[data.coin])
+              .map(data => ({
+                name: data.coin,
+                amount: roundNumber(
+                  data.numberOfMasternodes *
+                    HOLDING_CAP_PER_NODE[data.coin] *
+                    cmcLatestData[data.coin].price,
+                ),
+                color: COIN_COLOR_HASH[data.coin],
+              }))}
+          />
+        )}
       </>
     );
-  }, [masternodesData]);
+  }, [masternodesData, cmcLatestData, currency]);
 
   if (
     isMasternodesDataLoading ||

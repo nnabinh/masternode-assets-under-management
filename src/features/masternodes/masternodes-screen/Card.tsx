@@ -1,5 +1,5 @@
 import {Image, StyleSheet, Text, View} from 'react-native';
-import {roundNumber} from '../../../utils/formatNumber';
+import {formatPrice} from '../../../utils/formatter';
 
 interface CardProps {
   cmcId: string;
@@ -41,7 +41,7 @@ export default function Card({
             {currency.name} value of all active assets:{' '}
           </Text>
           <Text>
-            {roundNumber(currencyValue * currency.value)} {currency.name}
+            {formatPrice(currencyValue * currency.value)} {currency.name}
           </Text>
         </View>
         <View style={styles.bodySeparator} />
@@ -50,7 +50,7 @@ export default function Card({
             Total AUM (assets under management):{' '}
           </Text>
           <Text>
-            {roundNumber(totalAUM)} {coinSymbol}
+            {formatPrice(totalAUM * currency.value)} {currency.name}
           </Text>
         </View>
       </View>

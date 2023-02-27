@@ -12,17 +12,23 @@ const useMasternodesData = () => {
   const {data, isLoading} = useGetMasternodesQuery({});
 
   const classifiedData = useMemo(() => {
+    const dashNodes: Masternode[] = [];
     const activeDashNodes: Masternode[] = [];
+    const deFiChainNodes: Masternode[] = [];
     const activeDeFiChainNodes: Masternode[] = [];
 
     data?.forEach(node => {
-      if (node.status === 'ACTIVE') {
-        if (node.coin === 'Dash') {
+      if (node.coin === 'Dash') {
+        if (node.status === 'ACTIVE') {
           activeDashNodes.push(node);
         }
-        if (node.coin === 'DeFi') {
+        dashNodes.push(node);
+      }
+      if (node.coin === 'DeFi') {
+        if (node.status === 'ACTIVE') {
           activeDeFiChainNodes.push(node);
         }
+        deFiChainNodes.push(node);
       }
     });
 
@@ -32,6 +38,7 @@ const useMasternodesData = () => {
             {
               coin: activeDashNodes[0].lastReward.amount.coin,
               amount: sumValues(activeDashNodes),
+              numberOfMasternodes: dashNodes.length,
             },
           ]
         : []),
@@ -40,6 +47,7 @@ const useMasternodesData = () => {
             {
               coin: activeDeFiChainNodes[0].lastReward.amount.coin,
               amount: sumValues(activeDeFiChainNodes),
+              numberOfMasternodes: deFiChainNodes.length,
             },
           ]
         : []),

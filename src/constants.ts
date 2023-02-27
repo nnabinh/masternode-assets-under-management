@@ -13,3 +13,8 @@ export const COIN_COLOR_HASH: {[symbol: string]: string} = {
   DASH: 'rgb(0, 140, 227)',
   DFI: 'rgb(255, 0, 175)',
 };
+
+export const HOLDING_CAP_PER_NODE: {[symbol: string]: number} = {
+  DASH: 1000,
+  DFI: 20000,
+};
